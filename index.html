@@ -61,7 +61,7 @@
               if (status == google.maps.GeocoderStatus.OK)
                 $("#" + addressId).val(results[0].formatted_address);
               else
-                $("#error").append("Unable to retrieve your address<br />");
+                $("#error").append("<p>"+status+"</p>");
             });
           },
           function(positionError){
