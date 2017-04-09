@@ -8,7 +8,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
     <script>
-
       var mapObject;var geocoder;var directionsRenderer
 
       function calculateRoute(from, to) {
@@ -50,25 +49,26 @@
       }
 
       $(document).ready(function() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-            geocoder.geocode({
-              "location": new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
-            },
-            function(results, status) {
-              if (status == google.maps.GeocoderStatus.OK)
-                $("#from").val(results[0].formatted_address);
-              else
-                $("#error").append("<p>"+status+"</p>");
-            });
+        geocoder = new google.maps.Geocoder();
+
+        if (navigator.geolocation) { // chekc if the browser supports
+
+          navigator.geolocation.getCurrentPosition(function (position) { // load current pos
+            geocoder.geocode(
+              {"location": new google.maps.LatLng(position.coords.latitude, position.coords.longitude)},
+              function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK)
+                  $("#from").val(results[0].formatted_address);
+                else
+                  $("#error").append("<p>"+status+"</p>");
+              });
 
             var options = { // initialize
                 zoom: 12,
                 center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
+                mapTypeId: google.maps.MapTypeId.ROADMAP };
+
             mapObject = new google.maps.Map(document.getElementById("map"), options);
-            geocoder = new google.maps.Geocoder();
 
             google.maps.event.addListener(mapObject, 'click', function(event) {
               geocoder.geocode({
