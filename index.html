@@ -55,42 +55,43 @@
         });*/
         setTimeout(function(){
           geocoder = new google.maps.Geocoder();
+
+                  if (navigator.geolocation) { // chekc if the browser supports
+
+                    navigator.geolocation.getCurrentPosition(function (position) { // load current pos
+                      geocoder.geocode(
+                        {
+                          "location": new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+                        },
+                        function(results, status) {
+                          if (status == google.maps.GeocoderStatus.OK)
+                            $("#from").val(results[0].formatted_address);
+                          else
+                            $("#error").append("<p>"+status+"</p>");
+                        }
+                      );
+
+                      initMap(position.coords.latitude, position.coords.longitude);
+
+                      google.maps.event.addListener(mapObject, 'click', function(event) {
+                        geocoder.geocode({'latLng': event.latLng}, function(results, status) {
+                          if (status == google.maps.GeocoderStatus.OK) {
+                            if (results[0]) {
+                              $("#to").val(results[0].formatted_address);
+                            }
+                          }
+                        });
+                      });
+
+                    });
+                  }
+
+                  $("#calculate-route").submit(function(event) { // on click submit
+                    event.preventDefault();
+                    calculateRoute($("#from").val(), $("#to").val()); // request to render the path
+                  });
         }, 5000);
 
-        if (navigator.geolocation) { // chekc if the browser supports
-
-          navigator.geolocation.getCurrentPosition(function (position) { // load current pos
-            geocoder.geocode(
-              {
-                "location": new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
-              },
-              function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK)
-                  $("#from").val(results[0].formatted_address);
-                else
-                  $("#error").append("<p>"+status+"</p>");
-              }
-            );
-
-            initMap(position.coords.latitude, position.coords.longitude);
-
-            google.maps.event.addListener(mapObject, 'click', function(event) {
-              geocoder.geocode({'latLng': event.latLng}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                  if (results[0]) {
-                    $("#to").val(results[0].formatted_address);
-                  }
-                }
-              });
-            });
-
-          });
-        }
-
-        $("#calculate-route").submit(function(event) { // on click submit
-          event.preventDefault();
-          calculateRoute($("#from").val(), $("#to").val()); // request to render the path
-        });
       });
     </script>
     <style type="text/css">
