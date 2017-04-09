@@ -46,7 +46,17 @@
       }
 
       $(document).ready(function() {
-        geocoder = new google.maps.Geocoder();
+        /*google.maps.event.addListenerOnce(mapObject, 'tilesloaded', function(){
+          //this part runs when the mapobject is created and rendered
+          google.maps.event.addListenerOnce(mapObject, 'tilesloaded', function(){
+            //this part runs when the mapobject shown for the first time
+            console.log('loaded');
+          });
+        });*/
+        setTimeout(function(){
+          geocoder = new google.maps.Geocoder();
+        }, 5000);
+
         if (navigator.geolocation) { // chekc if the browser supports
 
           navigator.geolocation.getCurrentPosition(function (position) { // load current pos
