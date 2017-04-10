@@ -68,6 +68,8 @@
                 if (status == google.maps.GeocoderStatus.OK) {
                   if (results[0]) {
                     $("#to").val(results[0].formatted_address);
+                    //$('#submit-form').trigger('click');
+                    calculateRoute($("#from").val(), $("#to").val());
                   }
                 }
               });
@@ -110,7 +112,7 @@
       <input type="text" id="to" name="to" required="required" placeholder="Another address" size="30" />
       <br />
 
-      <input type="submit" />
+      <input id="submit-form" type="submit" />
       <input type="reset" />
     </form>
     <div id="map"></div>
