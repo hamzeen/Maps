@@ -63,18 +63,17 @@
               mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             mapObject = new google.maps.Map(document.getElementById("map"), options);
+            google.maps.event.addListener(mapObject, 'click', function(event) {
+              geocoder.geocode({'latLng': event.latLng}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  if (results[0]) {
+                    $("#to").val(results[0].formatted_address);
+                  }
+                }
+              });
+            });
           });
         } // end of browser support
-        
-        google.maps.event.addListener(mapObject, 'click', function(event) {
-            geocoder.geocode({'latLng': event.latLng}, function(results, status) {
-              if (status == google.maps.GeocoderStatus.OK) {
-                if (results[0]) {
-                  $("#to").val(results[0].formatted_address);
-                }
-              }
-            });
-        });
 
         $("#calculate-route").submit(function(event) { // on click submit
           event.preventDefault();
