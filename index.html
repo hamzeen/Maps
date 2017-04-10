@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>GMaps Routes| Hamzeen. H.</title>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqrXKDMjGL5N_I9Dl9bgGcdYj2x2olEAY"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqrXKDMjGL5N_I9Dl9bgGcdYj2x2olEAY"
   type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
@@ -25,6 +25,9 @@
         directionsService
           .route(directionsRequest, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
+              if(directionsRenderer) {
+                directionsRenderer.setMap(null);
+              }
               directionsRenderer = new google.maps.DirectionsRenderer({
                 map: mapObject, directions: response
               });
@@ -41,23 +44,12 @@
           center: new google.maps.LatLng(lat, lon),
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        mapObject = null;
         mapObject = new google.maps.Map(document.getElementById("map"), options);
       }
 
       $(document).ready(function() {
-        /*google.maps.event.addListenerOnce(mapObject, 'tilesloaded', function(){
-          //this part runs when the mapobject is created and rendered
-          google.maps.event.addListenerOnce(mapObject, 'tilesloaded', function(){
-            //this part runs when the mapobject shown for the first time
-            console.log('loaded');
-          });
-        });*/
-        setTimeout(function(){
           geocoder = new google.maps.Geocoder();
-
                   if (navigator.geolocation) { // chekc if the browser supports
-
                     navigator.geolocation.getCurrentPosition(function (position) { // load current pos
                       geocoder.geocode(
                         {
@@ -90,8 +82,6 @@
                     event.preventDefault();
                     calculateRoute($("#from").val(), $("#to").val()); // request to render the path
                   });
-        }, 5000);
-
       });
     </script>
     <style type="text/css">
