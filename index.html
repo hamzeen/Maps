@@ -44,7 +44,18 @@
           center: new google.maps.LatLng(lat, lon),
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
+
         mapObject = new google.maps.Map(document.getElementById("map"), options);
+
+        google.maps.event.addListener(mapObject, 'click', function(event) {
+            geocoder.geocode({'latLng': event.latLng}, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                  $("#to").val(results[0].formatted_address);
+                }
+              }
+            });
+        });
       }
 
       $(document).ready(function() {
@@ -64,17 +75,6 @@
                       );
 
                       initMap(position.coords.latitude, position.coords.longitude);
-
-                      google.maps.event.addListener(mapObject, 'click', function(event) {
-                        geocoder.geocode({'latLng': event.latLng}, function(results, status) {
-                          if (status == google.maps.GeocoderStatus.OK) {
-                            if (results[0]) {
-                              $("#to").val(results[0].formatted_address);
-                            }
-                          }
-                        });
-                      });
-
                     });
                   }
 
