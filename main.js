@@ -81,7 +81,8 @@ $(document).ready(function() {
     });
   } // end of browser support
 
-  $("#find-route").submit(function(event) { // on click submit
+  $("#find-route" ).click(function() {
+    console.log('find!');
     event.preventDefault();
     calculateRoute($("#input-origin").val(), $("#input-destination").val()); // request to render the path
   });
@@ -114,7 +115,6 @@ $(document).ready(function() {
 
   function onInputFocus( ev ) {
     classie.add( ev.target.parentNode, 'input--filled' );
-    console.log('ehre!');
   }
 
   function onInputBlur( ev ) {
