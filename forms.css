@@ -52,7 +52,7 @@ font-family: sans-serif;
     z-index: 1;
     padding: 18px;
     background: #111;
-    position: fixed;
+    position: absolute;
 }
 .login-form h2 {
   color: #fff;
