@@ -10,7 +10,7 @@ function calculateRoute(from, to) {
     destination: to,
     travelMode: google.maps.DirectionsTravelMode.DRIVING,
     unitSystem: google.maps.UnitSystem.METRIC
-  }; // make edirections request to resolve the path
+  }; // make directions request to resolve the path
 
   directionsService
     .route(directionsRequest, function(response, status) {
@@ -72,7 +72,7 @@ $(document).ready(function() {
             if (results[0]) {
               $("#input-destination").val(results[0].formatted_address);
               $("#input-destination").focus();
-              calculateRoute($("#input-origin").val(), $("#destination").val());
+              calculateRoute($("#input-origin").val(), $("#input-destination").val());
             }
           }
         });
