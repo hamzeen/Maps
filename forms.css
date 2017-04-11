@@ -94,7 +94,7 @@ font-family: sans-serif;
     border-color: #000;*/
 
     color: #fff;
-    background-color: rgba(220,220,200,.1);
+    background-color: rgba(220,220,200,.05);
     border-color: transparent;
     border-bottom: 1px solid hsl(200, 100%, 50%);
 }
